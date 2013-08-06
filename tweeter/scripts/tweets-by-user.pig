@@ -17,5 +17,5 @@ first_100 = limit raw 100;
 */
 
 aa = FOREACH first_100 generate (chararray)tweet#'text' as text, (long)tweet#'id' as id, com.twitter.elephantbird.pig.piggybank.JsonStringToMap(tweet#'user') as user; 
-dd = foreach aa generate text,id,user#'screen_name' as name:chararray;
+dd = foreach aa generate text,id,user#'screen_name' as name:chararray, user#'followers_count' as follower:int;
 dump dd
