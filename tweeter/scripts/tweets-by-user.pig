@@ -24,7 +24,7 @@ bb = foreach aa generate text,id,user#'screen_name' as name:chararray, user#'fol
 group_user = GROUP bb BY name;
 active_user = FOREACH group_user GENERATE group as name,  COUNT(bb) as tweet_cnt_user;
 
---- NEED TO ADD AN ORDERING
+--- With ordering to get the 10 most active user
 order_active_user = ORDER active_user BY tweet_cnt_user DESC;
 first_10_user = LIMIT order_active_user 10;
 dump first_10_user;
