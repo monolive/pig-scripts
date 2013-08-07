@@ -28,3 +28,10 @@ active_user = FOREACH group_user GENERATE group as name,  COUNT(bb) as tweet_cnt
 order_active_user = ORDER active_user BY tweet_cnt_user DESC;
 first_10_user = LIMIT order_active_user 10;
 dump first_10_user;
+
+/*
+--- Get user with most followers
+max_follower = FOREACH group_user GENERATE MAX(follower);
+dump max_follower
+
+*/
