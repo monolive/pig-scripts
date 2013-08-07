@@ -22,9 +22,9 @@ bb = foreach aa generate text,id,user#'screen_name' as name:chararray, user#'fol
 
 --- Find most active tweeter, we're going to first group by username and then count how many tweet we've got for each user
 group_user = GROUP bb BY name;
-active_user = FOREACH group_user GENERATE group as name,  COUNT(bb);
+active_user = FOREACH group_user GENERATE group as name,  COUNT(bb) as tweet_cnt_user;
 
 --- NEED TO ADD AN ORDERING
---- order_active_user = ORDER active_user BY 
-first_10_user = LIMIT active_user 10;
+order_active_user = ORDER active_user BY tweet_cnt_user DESC;
+first_10_user = LIMIT order_active_user 10;
 dump first_10_user;
