@@ -12,11 +12,14 @@ REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-co
 raw = load 'tweets/30-Jul-2013/*' using com.twitter.elephantbird.pig.load.JsonLoader() as tweet;
 
 --- extract relevant info from tweet
-clean = FOREACH raw GENERATE (chararray)tweet#'text' as text, (long)tweet#'id' as id, (chararray)tweet#'retweet' as retweet;
-
-tweet_retweeted = FILTER clean BY (boolean) retweet == true;
-dump tweet_retweeted;
-
+clean = FOREACH raw GENERATE (chararray)tweet#'text' as text, (long)tweet#'id' as id, (boolean)tweet#'favorited' as favorite;
+dump clean;
+/*
+small = LIMIT clean 10;
+dump small
+*/
+tweet_favorited = FILTER clean BY (boolean)favorite == true;
+dump tweet_favorited;
 
 
 /*
