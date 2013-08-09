@@ -3,10 +3,10 @@
 Get the 10 most active tweeter
 
 */
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-hadoop-compat-4.1.jar';
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/json-simple-1.1.jar';
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-pig-4.1.jar';
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-core-4.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-hadoop-compat-4.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/json-simple-1.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-pig-4.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-core-4.1.jar';
 
 --- Load Nested JSON
 raw = load 'tweets/30-Jul-2013/*' using com.twitter.elephantbird.pig.load.JsonLoader() as tweet;

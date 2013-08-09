@@ -3,10 +3,10 @@
 Get 10 most influencal tweets
 
 */
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-hadoop-compat-4.1.jar';
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/json-simple-1.1.jar';
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-pig-4.1.jar';
-REGISTER '/home/orenault/pig-scripts/tweeter/elephant-birds-jar/elephant-bird-core-4.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-hadoop-compat-4.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/json-simple-1.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-pig-4.1.jar';
+REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-core-4.1.jar';
 
 --- Load Nested JSON
 raw = load 'tweets/30-Jul-2013/*' using com.twitter.elephantbird.pig.load.JsonLoader() as tweet;
@@ -18,7 +18,7 @@ dump clean;
 small = LIMIT clean 10;
 dump small
 */
-tweet_favorited = FILTER clean BY favorite == FALSE ;
+tweet_favorited = FILTER clean BY favorite == FALSE;
 --- tweet_favorited = FILTER clean BY favorite matches 'false';
 dump tweet_favorited;
 
