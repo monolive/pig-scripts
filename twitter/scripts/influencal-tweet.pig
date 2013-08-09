@@ -13,12 +13,13 @@ raw = load 'tweets/30-Jul-2013/*' using com.twitter.elephantbird.pig.load.JsonLo
 
 --- extract relevant info from tweet
 clean = FOREACH raw GENERATE (chararray)tweet#'text' as text, (long)tweet#'id' as id, (boolean)tweet#'favorited' as favorite;
-dump clean;
 /*
+dump clean;
 small = LIMIT clean 10;
 dump small
 */
-tweet_favorited = FILTER clean BY (boolean)favorite == true;
+tweet_favorited = FILTER clean BY favorite == FALSE ;
+--- tweet_favorited = FILTER clean BY favorite matches 'false';
 dump tweet_favorited;
 
 
