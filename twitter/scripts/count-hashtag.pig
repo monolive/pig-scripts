@@ -13,13 +13,20 @@ raw = load 'tweets/{08-Aug-2013,09-Aug-2013}/*' using com.twitter.elephantbird.p
 
 --- extract entities
 entities = FOREACH raw GENERATE tweet#'entities' as tweet_entities;
-DESCRIBE entities;
 hashtag_mention = FILTER entities BY (NOT IsEmpty(tweet_entities#'hashtags'));
-hashtags = FOREACH hashtag_mention GENERATE tweet_entities#'hashtags' as hash_tags;
+--- hashtags = FOREACH hashtag_mention GENERATE FLATTEN((bag{})tweet_entities#'hashtags') as hash_tags;
+hashtags = FOREACH hashtag_mention GENERATE FLATTEN((bag{})tweet_entities#'hashtags') as hash_tags;
 dump hashtags;
+/*
+({([indices#{(57),(61)},text#tft])})
+({([indices#{(56),(64)},text#bigdata]),([indices#{(65),(75)},text#analytics]),([indices#{(76),(93)},text#rosslynanalytics])})
+*/
+/*
+hashtags = FOREACH hashtag_mention GENERATE tweet_entities#'hashtags' as hash_tags:map(indices:chararray,text:chararray);
+hashtag = FOREACH hashtags GENERATE hash_tags#'text';
+dump hashtag;
 user_mentions = FILTER entities BY (NOT IsEmpty(tweet_entities#'user_mentions'));
 dump user_mentions;
-/*
 clean1 = FOREACH raw GENERATE com.twitter.elephantbird.pig.piggybank.JsonStringToMap(tweet#'entities') as entities, (long)tweet#'id' as id; 
 user_ref = FILTER 
 small = LIMIT clean1 10;
