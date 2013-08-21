@@ -14,8 +14,8 @@ raw = load 'tweets/{08-Aug-2013,09-Aug-2013}/*' using com.twitter.elephantbird.p
 --- extract entities
 entities = FOREACH raw GENERATE tweet#'entities' as tweet_entities;
 hashtag_mention = FILTER entities BY (NOT IsEmpty(tweet_entities#'hashtags'));
-hashtags_raw = FOREACH hashtag_mention GENERATE FLATTEN((bag{})tweet_entities#'hashtags') as (hash_tags:[]);
-hashtags = FOREACH hashtags_raw GENERATE LOWER(hash_tags#'text') as text;
+hashtag_mention = FOREACH hashtag_mention GENERATE FLATTEN((bag{})tweet_entities#'hashtags') as (hash_tags:[]);
+hashtags = FOREACH hashtag_mention GENERATE LOWER(hash_tags#'text') as text;
 group_by_hashtags = GROUP hashtags BY text;
 popular_hashtags = FOREACH group_by_hashtags GENERATE group as text, COUNT(hashtags) as hashtags_counter;
 order_hashtags = ORDER popular_hashtags BY hashtags_counter DESC;
