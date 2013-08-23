@@ -18,6 +18,10 @@ raw = load 'tweets/08-Aug-2013/*' using com.twitter.elephantbird.pig.load.JsonLo
 users = FOREACH raw GENERATE tweet#'user' as user_info;
 user_info = FOREACH users GENERATE user_info#'id' as id:long, user_info#'screen_name' as screen_name:chararray, user_info#'friends_count' as friends_count:int, user_info#'followers_count' as followers_count:int, user_info#'profile_image_url' as image;
 group_user = GROUP user_info BY (screen_name, id, friends_count, followers_count, image);
+describe group_user;
 count_user = FOREACH group_user GENERATE group as (screen_name, id, friends_count, followers_count, image), COUNT(user_info) as user_count;
-order_user = ORDER count_user BY user_count DESC;
---- store order_user into 'tweet_daily_user' using org.apache.hcatalog.pig.HCatStorer('date=20130808');
+flatten_count_user = FOREACH count_user GENERATE $0.screen_name as screen_name, $0.id as id, $0.friends_count as friends_count, $0.followers_count as followers_count, $0.image as profile_image:chararray, user_count as user_count:int;
+order_user = ORDER flatten_count_user BY user_count DESC;
+describe order_user;
+--- need to look into partition
+store order_user into 'tweet_daily_user' using org.apache.hcatalog.pig.HCatStorer();
