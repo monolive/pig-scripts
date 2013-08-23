@@ -26,5 +26,10 @@ active_user = FOREACH group_user GENERATE group as name,  COUNT(bb) as tweet_cnt
 
 --- With ordering to get the 10 most active user
 order_active_user = ORDER active_user BY tweet_cnt_user DESC;
+describe order_active_user;
+/*
+
 first_10_user = LIMIT order_active_user 10;
 dump first_10_user;
+
+*/
