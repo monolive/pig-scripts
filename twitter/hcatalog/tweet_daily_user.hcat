@@ -1,5 +1,5 @@
 DROP TABLE tweet_daily_user;
-CREATE TABLE tweet_daily_user(time STRING, ip STRING, country STRING, status STRING)
+CREATE TABLE tweet_daily_user(screen_name STRING, id BIGINT, friends_count INT, followers_count INT, profile_image STRING, user_count INT)
 ROW FORMAT DELIMITED
   FIELDS TERMINATED BY '|'
 LOCATION '/flume/events';
