@@ -9,18 +9,34 @@ REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-pi
 REGISTER '/home/orenault/pig-scripts/twitter/elephant-birds-jar/elephant-bird-core-4.1.jar';
 
 --- Load Nested JSON
-raw = load 'tweets/30-Jul-2013/*' using com.twitter.elephantbird.pig.load.JsonLoader() as tweet;
+raw = load 'tweets/{08,09}-Aug-2013/*' using com.twitter.elephantbird.pig.load.JsonLoader('-nestedLoad') as tweet;
+describe raw;
+--- tweet_extract = FOREACH raw GENERATE tweet#'text' as text:chararray, tweet#'retweet_count' as retweet_count:chararray, tweet#'retweeted' as retweet:boolean;
+tweet_extract = FOREACH raw GENERATE (chararray)tweet#'text' as text, (int)tweet#'retweet_count' as retweet_count, (boolean)tweet#'retweeted' as retweet;
+--- tweet_extract_conv = FOREACH tweet_extract GENERATE (chararray)text, (chararray)retweet_count, (boolean)retweet;
+--- dump tweet_extract;
+retweet_only = FILTER tweet_extract BY ( retweet_count != 0 );
+dump retweet_only;
+
+
+
+
+/*
+retweet = FILTER 
+
 
 --- extract relevant info from tweet
 clean = FOREACH raw GENERATE (chararray)tweet#'text' as text, (long)tweet#'id' as id, (boolean)tweet#'favorited' as favorite;
+
+*/
 /*
 dump clean;
 small = LIMIT clean 10;
 dump small
 */
-tweet_favorited = FILTER clean BY favorite == FALSE;
+--- tweet_favorited = FILTER clean BY favorite == FALSE;
 --- tweet_favorited = FILTER clean BY favorite matches 'false';
-dump tweet_favorited;
+--- dump tweet_favorited;
 
 
 /*
