@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 from datetime import datetime
-import calendar
-import time
 
 @outputSchema("date:DateTime")
 def date_to_iso_format(date):
@@ -11,5 +9,8 @@ def date_to_iso_format(date):
 
 @outputSchema("date:int")
 def date_to_int(date):
-#  return time.mktime(datetime.strptime(date,'%d-%b-%y').timetuple())
-  return calendar.timegm(time.strptime(date,'%d-%b-%y'))
+  # return how many days have elpased since the 01/01/1970 
+  tuple_date = datetime.strptime(date,'%d-%b-%y')
+  reference = datetime.strptime('01-Jan-1970','%d-%b-%y')
+  days =  (tuple_date - reference).days
+  return days
