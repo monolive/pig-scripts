@@ -21,6 +21,6 @@ minus_duplicate = FILTER date_transaction BY ( record1 != record2 ) AND (record1
 
 --- dump  minus_duplicate;
 group_transaction = GROUP minus_duplicate by customer;
-all_transaction = FOREACH group_transaction GENERATE $0 as customer, FLATTEN(DIFF($1.record1, $1.record2)) as all_records;
+all_transaction = FOREACH group_transaction GENERATE $0 as customer, FLATTEN(DIFF($1.record1, $1.record2)) as all_records:(loc_id:long,bkcountry:chararray,branch_name:chararray,core_ac_no:long,transaction_date:chararray,date:int,transaction_id:chararray,db_cr:chararray,transaction_type:chararray,usd_equivalent:chararray);
 
 illustrate all_transaction;
