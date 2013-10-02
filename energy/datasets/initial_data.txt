@@ -1,0 +1,6 @@
+1,hadoop,1234556,oupla,I
+2,hotel,134567,guid,I
+3,adoop,987654,london,I
+4,oliv,2345567,opla,I 
+5,maurice,1876543,upla,I
+6,tranber,987651,oerty,I

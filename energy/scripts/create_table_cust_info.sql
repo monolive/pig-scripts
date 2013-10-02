@@ -1,0 +1,4 @@
+DROP TABLE cust_info;
+CREATE TABLE cust_info(id BIGINT, username STRING, telephone BIGINT, city STRING, status STRING) PARTITIONED BY (timestamp STRING)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ',';

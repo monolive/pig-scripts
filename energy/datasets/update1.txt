@@ -1,0 +1,5 @@
+1,hadoop,1234556,maastrich,U
+2,hotel,222222,guid,U
+3,roger,987654,london,U
+4,oliv,2345567,opla,D
+7,superforme,122112,amsterdam,I
