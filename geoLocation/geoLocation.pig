@@ -10,7 +10,7 @@ REGISTER 'geoip-1.2.8.jar';
 
 DEFINE GeoIpLookup com.mozilla.pig.eval.geoip.GeoIpLookup('GeoLiteCity.dat');
 
-RAW_LOGS = LOAD '/user/orenault/weblogs/blancheporte_fr-analytics.3si-btoc.com_access.log-20140301' as (line:chararray);
+RAW_LOGS = LOAD '/user/orenault/weblogs/access_log' as (line:chararray);
 LOGS_BASE = FOREACH RAW_LOGS GENERATE 
 FLATTEN( 
 	REGEX_EXTRACT_ALL(line, '(\\S+) - - \\[([^\\[]+)\\]\\s+"([^"]+)"\\s+(\\d+)\\s+(\\d+)\\s+"([^"]+)"\\s+"([^"]+)"')
