@@ -26,5 +26,8 @@ AS (
 );
 IP = FOREACH LOGS_BASE GENERATE FLATTEN(ip);
 UNIQUE_IP = DISTINCT IP;
-GEOIP = FOREACH UNIQUE_IP GENERATE ip, FLATTEN(GeoIpLookup(ip)) AS (country:chararray, country_code:chararray, region:chararray, city:chararray, postal_code:chararray, metro_code:int);
+GEOIP = FOREACH UNIQUE_IP GENERATE ip, FLATTEN(GeoIpLookup(ip)) AS (country:chararray, country_code:chararray, region:chararray, city:chararray, postal_code:chararray, metro_code:chararray);
+
+-- ILLUSTRATE GEOIP;
+-- DESCRIBE GEOIP;
 STORE GEOIP INTO 'geoLocation' USING org.apache.hcatalog.pig.HCatStorer();
