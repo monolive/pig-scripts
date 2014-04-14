@@ -2,7 +2,7 @@ DROP TABLE info_by_jvm;
 
 CREATE TABLE info_by_jvm(
    nom_jvm STRING,
-   count_jvm INT,
+   count_jvm BIGINT,
    avg_t_done DOUBLE,
    max_t_done BIGINT,
    min_t_done BIGINT,
