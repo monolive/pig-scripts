@@ -27,7 +27,7 @@ ALL_RESULTS = FOREACH INFO GENERATE ip, url_info.url as url:chararray, url_info.
 
 STORE ALL_RESULTS INTO 'raw_info' USING org.apache.hcatalog.pig.HCatStorer();
 
-RESULTS = FILTER ALL_RESULTS BY url != 'blank';
+RESULTS = FILTER ALL_RESULTS BY url != 'blank' ;
 
 
 -- GET information by URL 
@@ -37,6 +37,7 @@ DST_BY_PAGE = DISTINCT RSLT_BY_PAGE;
 STORE DST_BY_PAGE INTO 'info_by_page' USING org.apache.hcatalog.pig.HCatStorer();
 
 -- GET information by JVM 
+RESULTS = FILTER ALL_RESULTS BY nom_jvm != 'blank' ;
 GRP_BY_JVM = GROUP RESULTS BY nom_jvm;
 RSLT_BY_JVM = FOREACH GRP_BY_JVM GENERATE FLATTEN(RESULTS.nom_jvm ) as nom_jvm, COUNT(RESULTS.nom_jvm) as count_jvm,  AVG(RESULTS.t_done) as avg_t_done, MAX(RESULTS.t_done) as max_t_done, MIN(RESULTS.t_done) as min_t_done, AVG(RESULTS.t_resp) as avg_t_resp, MAX(RESULTS.t_resp) as max_t_resp, MIN(RESULTS.t_resp) as min_t_resp, AVG(RESULTS.t_page) as avg_t_page, MAX(RESULTS.t_page) as max_t_page, MIN(RESULTS.t_page) as min_t_page;
 DST_BY_JVM = DISTINCT RSLT_BY_JVM;
